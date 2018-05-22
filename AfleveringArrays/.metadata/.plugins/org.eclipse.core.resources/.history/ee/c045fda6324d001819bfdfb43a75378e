@@ -1,0 +1,31 @@
+package application.service;
+
+import application.model.*;
+
+import storage.Storage;
+
+public class Service {
+	
+	public static void createBil(String model, String maerke, String nummerplade, String brændstof) {
+		Bil bil = new Bil(model, maerke, nummerplade, brændstof);
+		Storage.addBil(bil);
+	}
+	
+	public static void updateBil(Bil bil, String model, String maerke, String nummerplade, String brændstof) {
+		bil = new Bil(model, maerke, nummerplade, brændstof);	
+	}
+	
+	public static void deleteBil(Bil bil) {
+		Storage.removeBil(bil);
+	}
+	
+	public static void createKunde(String navn, String email, String tlfnr, boolean erhvervskunde) {
+		Kunde kunde = new Kunde(navn, email, tlfnr, erhvervskunde);
+		Storage.addKunde(kunde);
+	}
+	
+	public static void updateKunde(Kunde kunde, String navn, String email, String tlfnr, boolean erhvervskunde) {
+		kunde = new Kunde(navn, email, tlfnr, erhvervskunde);
+		
+	}
+}

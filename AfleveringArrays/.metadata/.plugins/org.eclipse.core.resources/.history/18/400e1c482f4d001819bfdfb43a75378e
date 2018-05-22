@@ -1,0 +1,12 @@
+package application.model;
+
+import java.time.*;
+import java.util.*;
+
+
+public class Udlejning {
+	private Kunde kunde;
+	private ArrayList<Bil> biler;
+	private LocalDate udleveringsdato;
+	private LocalDate tilbageleveringsdato;
+}

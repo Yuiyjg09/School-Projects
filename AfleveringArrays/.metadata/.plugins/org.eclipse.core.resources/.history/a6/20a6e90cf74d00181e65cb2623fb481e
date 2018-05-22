@@ -1,0 +1,64 @@
+nModel().getSelectedItem().equals(null)) {
+			System.out.println(lvwUdlejninger);
+			lvwUdlejninger.getItems().setAll(lvwKunder.getSelectionModel().getSelectedItem().getUdlejninger());
+			
+		} else {
+			lvwUdlejninger.getItems().setAll();
+		}
+	}
+	
+	private void createKundeAction() {
+		KundeWindow dia = new KundeWindow("Opret ny Kunde");
+		dia.showAndWait();
+	}
+	
+	private void deleteKundeAction() {
+		if(!(lvwKunder.getItems().isEmpty())) {
+			lvwKunder.getItems().remove(lvwKunder.getSelectionModel().getSelectedItem());
+			Storage.removeKunde(lvwKunder.getSelectionModel().getSelectedItem());
+			
+		} else {
+			Alert alert = new Alert(null);
+			alert.setAlertType(AlertType.INFORMATION);
+			alert.setHeaderText("Ingen Kunde valgt");
+			alert.setContentText("Vælg en Kunde, der skal slettes");
+			alert.showAndWait();
+		}
+	}
+	
+	private void createUdlejningAction() {
+		if(!(lvwKunder.getItems().isEmpty())) {
+			UdlejningWindow dia = new UdlejningWindow("Opret Udlejning", lvwKunder.getSelectionModel().getSelectedItem());
+			dia.showAndWait();
+			
+			if(!lvwKunder.getSelectionModel().getSelectedItem().getUdlejninger().isEmpty()) {
+				lvwUdlejninger.getItems().setAll(lvwKunder.getSelectionModel().getSelectedItem().getUdlejninger());
+			}
+		} else {
+			Alert alert = new Alert(null);
+			alert.setAlertType(AlertType.INFORMATION);
+			alert.setHeaderText("Ingen Kunde valgt");
+			alert.setContentText("Vælg en Kunde for at oprette en Udlejning");
+			alert.showAndWait();
+		}
+	}
+	
+	private void visUdlejningAction() {
+		if(!(lvwUdlejninger.getItems().isEmpty())) {
+			VisUdlejningWindow dia = new VisUdlejningWindow("", lvwUdlejninger.getSelectionModel().getSelectedItem());
+			dia.showAndWait();
+			
+		} else {
+			Alert alert = new Alert(null);
+			alert.setAlertType(AlertType.INFORMATION);
+			alert.setHeaderText("Ingen Kunde valgt");
+			alert.setContentText("Vælg en Kunde for at oprette en Udlejning");
+			alert.showAndWait();
+		}
+	}
+	
+	private void sletUdlejningAction() {
+		if(!(lvwUdlejninger.getItems().isEmpty())) {
+			lvwKunder.getSelectionModel().getSelectedItem().removeUdlejninger(lvwUdlejninger.getSelectionModel().getSelectedItem());
+			lvwUdlejninger.getItems().remove(lvwUdlejninger.getSelectionModel().getSelectedItem());
+			Stora

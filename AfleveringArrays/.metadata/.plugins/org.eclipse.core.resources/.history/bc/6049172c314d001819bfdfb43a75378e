@@ -1,0 +1,9 @@
+package storage;
+
+import java.util.*;
+
+import application.model.*;
+
+public class Storage {
+	private static ArrayList<Bil> biler;
+}

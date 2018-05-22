@@ -1,0 +1,8 @@
+package guifx;
+
+public class VisUdlejningWindow extends Stage{
+	
+	public VisUdlejningWindow() {
+		
+	}
+}

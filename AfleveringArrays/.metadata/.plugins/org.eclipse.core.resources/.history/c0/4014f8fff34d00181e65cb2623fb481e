@@ -1,0 +1,61 @@
+package application.model;
+
+import java.util.*;
+
+public class Bil {
+	private String model;
+	private String maerke;
+	private String nummerplade;
+	private String brændstof;
+	private Tilstand tilstand;
+	private ArrayList<Udlejning> udlejninger;
+	
+	public Bil(String model, String maerke, String nummerplade, String brændstof) {
+		this.setModel(model);
+		this.setMaerke(maerke);
+		this.setNummerplade(nummerplade);
+		this.setBrændstof(brændstof);
+		this.tilstand = Tilstand.KOEBT;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public String getMaerke() {
+		return maerke;
+	}
+
+	public void setMaerke(String maerke) {
+		this.maerke = maerke;
+	}
+
+	public String getNummerplade() {
+		return nummerplade;
+	}
+
+	public void setNummerplade(String nummerplade) {
+		this.nummerplade = nummerplade;
+	}
+
+	public Tilstand getTilstand() {
+		return tilstand;
+	}
+
+	public void setTilstand(Tilstand tilstand) {
+		this.tilstand = tilstand;
+	}
+
+	public String getBrændstof() {
+		return brændstof;
+	}
+
+	public void setBrændstof(String brændstof) {
+		this.brændstof = brændstof;
+	}
+	
+}

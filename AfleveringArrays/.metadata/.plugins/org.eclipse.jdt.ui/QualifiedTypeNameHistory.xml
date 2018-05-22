@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="guifx.DeltagerPane"/>
+<fullyQualifiedTypeName name="guifx.KonferencePane"/>
+<fullyQualifiedTypeName name="javafx.scene.control.DateCell"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.VBox"/>
+<fullyQualifiedTypeName name="javafx.beans.value.ChangeListener"/>
+<fullyQualifiedTypeName name="application.model.Tilmelding"/>
+<fullyQualifiedTypeName name="application.model.HotelService"/>
+<fullyQualifiedTypeName name="Model.Tilstand"/>
+<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+<fullyQualifiedTypeName name="guifx.KundePane"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.HBox"/>
+<fullyQualifiedTypeName name="guifx.BilWindow"/>
+<fullyQualifiedTypeName name="guifx.KatagoriPane"/>
+<fullyQualifiedTypeName name="application.service.Service"/>
+<fullyQualifiedTypeName name="java.lang.Double"/>
+<fullyQualifiedTypeName name="javafx.scene.control.Alert"/>
+<fullyQualifiedTypeName name="javafx.util.Callback"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ListCell"/>
+<fullyQualifiedTypeName name="guifx.KundeWindow"/>
+<fullyQualifiedTypeName name="javafx.event.EventHandler"/>
+<fullyQualifiedTypeName name="javafx.scene.control.CheckBox"/>
+<fullyQualifiedTypeName name="guifx.AdminPane"/>
+<fullyQualifiedTypeName name="javafx.scene.control.DatePicker"/>
+<fullyQualifiedTypeName name="java.time.LocalDate"/>
+<fullyQualifiedTypeName name="application.model.Bil"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ComboBox"/>
+<fullyQualifiedTypeName name="storage.Storage"/>
+<fullyQualifiedTypeName name="application.model.BilKatagori"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ListView"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="application.model.Tilstand"/>
+<fullyQualifiedTypeName name="guifx.VisKatagoriWindow"/>
+<fullyQualifiedTypeName name="application.model.Kunde"/>
+<fullyQualifiedTypeName name="javafx.scene.control.Button"/>
+<fullyQualifiedTypeName name="guifx.VisUdlejningWindow"/>
+<fullyQualifiedTypeName name="guifx.UdlejningWindow"/>
+<fullyQualifiedTypeName name="application.model.Udlejning"/>
+<fullyQualifiedTypeName name="javafx.scene.control.TextArea"/>
+<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="javafx.scene.control.TextField"/>
+<fullyQualifiedTypeName name="javafx.scene.control.Label"/>
+</qualifiedTypeNameHistroy>

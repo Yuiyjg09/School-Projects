@@ -1,0 +1,48 @@
+package application.model;
+
+public class Bil {
+	private String model;
+	private String maerke;
+	private String nummerplade;
+	private Tilstand tilstand;
+	
+	public Bil(String model, String maerke, String nummerplade) {
+		this.setModel(model);
+		this.setMaerke(maerke);
+		this.setNummerplade(nummerplade);
+		this.tilstand = Tilstand.KOEBT;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public String getMaerke() {
+		return maerke;
+	}
+
+	public void setMaerke(String maerke) {
+		this.maerke = maerke;
+	}
+
+	public String getNummerplade() {
+		return nummerplade;
+	}
+
+	public void setNummerplade(String nummerplade) {
+		this.nummerplade = nummerplade;
+	}
+
+	public Tilstand getTilstand() {
+		return tilstand;
+	}
+
+	public void setTilstand(Tilstand tilstand) {
+		this.tilstand = tilstand;
+	}
+	
+}

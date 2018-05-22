@@ -1,0 +1,88 @@
+package application.model;
+
+import java.util.*;
+
+public class Bil {
+	private String model;
+	private String maerke;
+	private String nummerplade;
+	private String brændstof;
+	private Tilstand tilstand;
+	private int km;
+	private ArrayList<Udlejning> udlejninger;
+	
+	public Bil(String model, String maerke, String nummerplade, String brændstof) {
+		this.setModel(model);
+		this.setMaerke(maerke);
+		this.setNummerplade(nummerplade);
+		this.setBrændstof(brændstof);
+		this.tilstand = Tilstand.KOEBT;
+		this.setKm(0);
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public String getMaerke() {
+		return maerke;
+	}
+
+	public void setMaerke(String maerke) {
+		this.maerke = maerke;
+	}
+
+	public String getNummerplade() {
+		return nummerplade;
+	}
+
+	public void setNummerplade(String nummerplade) {
+		this.nummerplade = nummerplade;
+	}
+
+	public Tilstand getTilstand() {
+		return tilstand;
+	}
+
+	public void setTilstand(Tilstand tilstand) {
+		this.tilstand = tilstand;
+	}
+
+	public String getBrændstof() {
+		return brændstof;
+	}
+
+	public void setBrændstof(String brændstof) {
+		this.brændstof = brændstof;
+	}
+
+	public ArrayList<Udlejning> getUdlejninger() {
+		return new ArrayList<Udlejning>(udlejninger);
+	}
+
+	public void addUdlejning(Udlejning udlejning) {
+		this.udlejninger.add(udlejning);
+	}
+	
+	public void removeUdlejning(Udlejning udlejning) {
+		this.udlejninger.remove(udlejning);
+	}
+
+	public int getKm() {
+		return km;
+	}
+
+	public void setKm(int km) {
+		this.km = km;
+	}
+	
+	@Override
+	public String toString() {
+		return maerke + ", " + model + ", Nummerplade: " + nummerplade + ", Brændstof: " + brændstof + ", km: " + km + ", Status: " + tilstand;
+	}
+	
+}

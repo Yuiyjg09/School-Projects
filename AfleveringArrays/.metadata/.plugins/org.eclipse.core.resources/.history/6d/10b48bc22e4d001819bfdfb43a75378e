@@ -1,0 +1,23 @@
+package application.model;
+
+public class Kunde {
+	private String navn;
+	private String email;
+	private String tlfnr;
+	private static int kundenr;
+	private boolean erhvervskunde;
+	
+	public Kunde(String navn, String email, String tlfnr, boolean erhvervskunde) {
+		this.navn = navn;
+		this.email = email;
+		this.tlfnr = tlfnr;
+		this.erhvervskunde = erhvervskunde;
+	}
+	
+	public String getNavn() {
+		return navn;
+	}
+	public void setNavn(String navn) {
+		this.navn = navn;
+	}
+}

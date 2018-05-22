@@ -1,0 +1,412 @@
+package guifx;
+
+import java.time.LocalDate;
+
+import application.model.Deltager;
+import application.model.Hotel;
+import application.model.HotelService;
+import application.model.Konference;
+import application.model.Ledsager;
+import application.model.Tilmelding;
+import application.model.Udflugt;
+import application.service.Service;
+import javafx.beans.value.ChangeListener;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+public class TilmeldWindow extends Stage {  
+	private Konference konference;
+	
+    public TilmeldWindow(String title, Konference konference) {
+        this.initStyle(StageStyle.UTILITY);
+        this.initModality(Modality.APPLICATION_MODAL);
+        this.setResizable(false);
+        
+        this.konference = konference;
+        
+        this.setTitle(title);
+        GridPane pane = new GridPane();
+        this.initContent(pane);
+        
+        Scene scene = new Scene(pane);
+        this.setScene(scene);
+    }
+    
+    public TilmeldWindow(String title) {
+        this(title, null);
+    }
+    
+    //----------------------------------------------------------------------
+    
+    private TextField deltNavn, deltTlf, deltEmail, deltAdr, deltFirma, deltFirmaTlf, deltLandby, ledNavn, ledTlf, ledEmail;
+    private CheckBox chkLedsager, chkForedragsholder;
+    private Alert alarm;
+    private ListView<Udflugt> udflugter, udflugterValgt; 
+    private ListView<Hotel> hotel;
+    private ListView<HotelService> services, servicesValgt;
+    private DatePicker ankomst, afrejse;
+    private Hotel hotellet;
+    
+    
+    private void initContent(GridPane pane) {
+        pane.setPadding(new Insets(10));
+        pane.setHgap(10);
+        pane.setVgap(10);
+        pane.setGridLinesVisible(false);
+        
+        Label lblDeltNavn = new Label("Navn:");
+        pane.add(lblDeltNavn, 0, 0);
+        deltNavn = new TextField();
+        pane.add(deltNavn, 1, 0);
+        deltNavn.setPrefWidth(200);
+        
+        Label lblDeltTlf = new Label("Tlf.Nr:");
+        pane.add(lblDeltTlf, 0, 1);
+        deltTlf = new TextField();
+        pane.add(deltTlf, 1, 1);
+        deltTlf.setPrefWidth(200);
+        
+        Label lblDeltEmail = new Label("E-Mail:");
+        pane.add(lblDeltEmail, 0, 2);
+        deltEmail = new TextField();
+        pane.add(deltEmail, 1, 2);
+        deltEmail.setPrefWidth(200);
+        
+        Label lblDeltAdr = new Label("Adresse:");
+        pane.add(lblDeltAdr, 0, 3);
+        deltAdr = new TextField();
+        pane.add(deltAdr, 1, 3);
+        deltAdr.setPrefWidth(200);
+        
+        Label lblDeltFirma = new Label("Firmanavn:");
+        pane.add(lblDeltFirma, 0, 4);
+        deltFirma = new TextField();
+        pane.add(deltFirma, 1, 4);
+        deltFirma.setPrefWidth(200);
+        
+        Label lblDeltFirmaTlf = new Label("Firma Tlf.Nr:");
+        pane.add(lblDeltFirmaTlf, 0, 5);
+        deltFirmaTlf = new TextField();
+        pane.add(deltFirmaTlf, 1, 5);
+        deltFirmaTlf.setPrefWidth(200);
+        
+        Label lblDeltLandby = new Label("By - Land:");
+        pane.add(lblDeltLandby, 0, 6);
+        deltLandby = new TextField();
+        pane.add(deltLandby, 1, 6);
+        deltLandby.setPrefWidth(200);
+        
+        Label lblAnkomst = new Label("Ankomst");
+        pane.add(lblAnkomst, 0, 7);
+        ankomst = new DatePicker();
+        pane.add(ankomst, 1, 7);
+        ankomst.setPrefWidth(200);
+        
+        Label lblAfrejse = new Label("Afrejse");
+        pane.add(lblAfrejse, 0, 8);
+        afrejse = new DatePicker();
+        pane.add(afrejse, 1, 8);
+        afrejse.setPrefWidth(200);
+        
+        chkForedragsholder = new CheckBox("Foredragsholder");
+        pane.add(chkForedragsholder, 0, 9);
+        
+        chkLedsager = new CheckBox("Ledsager:");
+        pane.add(chkLedsager, 0, 10);
+        
+        Label lblLedNavn = new Label("Navn:");
+        pane.add(lblLedNavn, 0, 11);
+        ledNavn = new TextField();
+        pane.add(ledNavn, 1, 11);
+        ledNavn.setPrefWidth(200);
+        
+        Label lblLedTlf = new Label("Tlf.Nr:");
+        pane.add(lblLedTlf, 0, 12);
+        ledTlf = new TextField();
+        pane.add(ledTlf, 1, 12);
+        ledNavn.setPrefWidth(200);
+        
+        Label lblLedEmail = new Label("E-Mail:");
+        pane.add(lblLedEmail, 0, 13);
+        ledEmail = new TextField();
+        pane.add(ledEmail, 1, 13);
+        ledEmail.setPrefWidth(200);
+        
+        Label lblHotel = new Label("Hoteller");
+        pane.add(lblHotel, 2, 0);
+        hotel = new ListView<>();
+        pane.add(hotel, 2, 1, 2, 2);
+        hotel.setPrefHeight(100);
+        hotel.getItems().setAll(Service.getHoteller());
+        
+        
+        ChangeListener<Hotel> listhotl = (ov, oldKonf, newKonf) -> this.selectedHotelChanged();
+        hotel.getSelectionModel().selectedItemProperty().addListener(listhotl);
+        
+        if (hotel.getItems().size() > 0) {
+        	hotel.getSelectionModel().select(0);
+        }
+        
+        hotellet = hotel.getSelectionModel().getSelectedItem();
+        
+        Label lblUdflugter = new Label("Udflugter:");
+        pane.add(lblUdflugter, 2, 3);
+        udflugter = new ListView<>();
+        pane.add(udflugter, 2, 4, 1, 5);
+        udflugter.setPrefHeight(200);
+        udflugter.setPrefWidth(200);
+        // Add udflugter
+        udflugter.getItems().setAll(konference.getUdflugter());
+        
+        Label lblUdflugterValgt = new Label("Udflugter Valgt:");
+        pane.add(lblUdflugterValgt, 3, 3);
+        udflugterValgt = new ListView<>();
+        pane.add(udflugterValgt, 3, 4, 1, 5);
+        udflugterValgt.setPrefHeight(200);
+        udflugterValgt.setPrefWidth(200);
+        // Udflugter fra liste af udflugter
+        
+        Button btnAddU = new Button("Tilføj");
+        pane.add(btnAddU, 2, 9);
+        btnAddU.setOnAction(event -> this.addUAction());
+        
+        ChangeListener<Udflugt> listKonf = (ov, oldKonf, newKonf) -> this.selectedUdflugtChanged();
+        udflugter.getSelectionModel().selectedItemProperty().addListener(listKonf);
+        
+        Button btnRemoveU = new Button("Fjern");
+        pane.add(btnRemoveU, 3, 9);
+        btnRemoveU.setOnAction(event -> this.removeUAction());
+        
+        ChangeListener<Udflugt> listKonf2 = (ov, oldKonf, newKonf) -> this.selectedUdflugt2Changed();
+        udflugterValgt.getSelectionModel().selectedItemProperty().addListener(listKonf2);
+        
+        Label lblServices = new Label("Services:");
+        pane.add(lblServices, 2, 10);
+        services = new ListView<>();
+        pane.add(services, 2, 11, 1, 5);
+        services.setPrefHeight(200);
+        services.setPrefWidth(200);
+        services.getItems().setAll(hotellet.getHotelServices());
+        // Add services
+       
+        
+        Label lblServicesValgt = new Label("Services Valgt: ");
+        pane.add(lblServicesValgt, 3, 10);
+        servicesValgt = new ListView<>();
+        pane.add(servicesValgt, 3, 11, 1, 5);
+        servicesValgt.setPrefHeight(200);
+        servicesValgt.setPrefWidth(200);
+        // Services fra liste af services
+        
+        Button btnAddS = new Button("Tilføj");
+        pane.add(btnAddS, 2, 16);
+        btnAddS.setOnAction(event -> this.addSAction());
+        
+        ChangeListener<HotelService> listHotel = (ov, oldHotel, newHotel) -> this.selectedServiceChanged();
+        services.getSelectionModel().selectedItemProperty().addListener(listHotel);
+        
+        Button btnRemoveS = new Button("Fjern");
+        pane.add(btnRemoveS, 3, 16);
+        btnRemoveS.setOnAction(event -> this.removeSAction());
+        
+        ChangeListener<HotelService> listHotel2 = (ov, oldHotel, newHotel) -> this.selectedService2Changed();
+        servicesValgt.getSelectionModel().selectedItemProperty().addListener(listHotel2);
+            
+        Button btnTilmeld = new Button("Tilmeld");
+        pane.add(btnTilmeld, 1, 16);
+        btnTilmeld.setOnAction(event -> this.tilmeldAction());
+        
+        Button btnAfbryd = new Button("Afbryd");
+        pane.add(btnAfbryd, 0, 16);
+        btnAfbryd.setOnAction(event -> this.afbrydAction());
+        
+        ledNavn.setDisable(true);
+        ledEmail.setDisable(true);
+        ledTlf.setDisable(true);
+        chkLedsager.setOnAction(event -> this.checker());
+        
+        
+        
+        if (services.getItems().size() > 0) {
+        	services.getSelectionModel().select(0);
+        }
+        
+        if (servicesValgt.getItems().size() > 0) {
+        	servicesValgt.getSelectionModel().select(0);
+        }
+        
+        if (udflugter.getItems().size() > 0) {
+        	udflugter.getSelectionModel().select(0);
+        }
+        
+        if (udflugterValgt.getItems().size() > 0) {
+        	udflugterValgt.getSelectionModel().select(0);
+        }
+        
+        
+    }
+
+
+    
+    
+    //---------------------------------------------------------------------
+    
+    private void checker() {
+    	if(chkLedsager.isSelected()) {
+    		ledNavn.setDisable(false);
+    		ledTlf.setDisable(false);
+    		ledEmail.setDisable(false);
+    	} else {
+    		ledNavn.setDisable(true);
+    		ledTlf.setDisable(true);
+    		ledEmail.setDisable(true);
+    	}
+    }
+    
+    private void addUAction() {
+        // Action til at adde til valgte udflugter
+    	if(!udflugter.getSelectionModel().getSelectedItem().equals(null)) {
+    	udflugterValgt.getItems().add(udflugter.getSelectionModel().getSelectedItem());
+    	udflugter.getItems().remove(udflugter.getSelectionModel().getSelectedItem());
+    	}
+    	
+    }
+    
+    private void removeUAction() {
+        //Action til at adde tilbage til listen af udflugter
+    	if(!udflugterValgt.getSelectionModel().getSelectedItem().equals(null)) {
+    	udflugter.getItems().add(udflugterValgt.getSelectionModel().getSelectedItem());
+    	udflugterValgt.getItems().remove(udflugterValgt.getSelectionModel().getSelectedItem());	
+    	}
+    }
+    
+    private void addSAction() {
+        //Action til at adde til valgte services
+    	if(!services.getSelectionModel().getSelectedItem().equals(null)) {
+    	servicesValgt.getItems().add(services.getSelectionModel().getSelectedItem());
+    	services.getItems().remove(services.getSelectionModel().getSelectedItem());
+    	}
+    }
+    
+    private void removeSAction() {
+        //Action til at adde tilbage til listen af services
+    	if(!servicesValgt.getSelectionModel().getSelectedItem().equals(null)) {
+    	services.getItems().add(servicesValgt.getSelectionModel().getSelectedItem());
+    	servicesValgt.getItems().remove(servicesValgt.getSelectionModel().getSelectedItem());
+    	}
+    }
+    
+    private void selectedHotelChanged() {
+    	if(hotel.getSelectionModel().getSelectedIndex() >= 0) {
+	
+    		Hotel hotellet = hotel.getSelectionModel().getSelectedItem();
+    		if(services != null) {
+    		services.getItems().setAll(hotellet.getHotelServices());
+    		}
+    	}
+    	
+    }
+    
+    private void afbrydAction() {
+        this.hide();
+    }
+    
+    private void selectedUdflugtChanged() {
+    	if(udflugter.getSelectionModel().getSelectedIndex() > 0) {
+    		int index3 = udflugter.getSelectionModel().getSelectedIndex() - 1;
+    		udflugter.getItems().setAll(konference.getUdflugter());
+    		udflugter.getSelectionModel().select(index3);
+    		}
+    }
+    
+    private void selectedServiceChanged() {
+
+    }
+    
+    private void selectedUdflugt2Changed() {
+    	if(udflugterValgt.getSelectionModel().getSelectedIndex() > 0) {
+    		int index3 = udflugterValgt.getSelectionModel().getSelectedIndex() - 1;
+    		
+    		udflugterValgt.getSelectionModel().select(index3);
+    	}
+    }
+    
+    private void selectedService2Changed() {
+ 
+    }
+
+   
+
+	private void tilmeldAction() {
+        String dNavn = deltNavn.getText().trim();
+        String dTlf = deltTlf.getText().trim();
+        String dEmail = deltEmail.getText().trim();
+        String dAdr = deltAdr.getText().trim();
+        String dFirma = deltFirma.getText().trim();
+        String dFirmaTlf = deltFirmaTlf.getText().trim();
+        String dLandby = deltLandby.getText().trim();
+        String lNavn = ledNavn.getText().trim();
+        String lTlf = ledTlf.getText().trim();
+        String lEmail = ledEmail.getText().trim();
+        Deltager deltager = null;
+        
+        if (dNavn.length() == 0 || dTlf.length() == 0 || dEmail.length() == 0 || dAdr.length() == 0 || dFirma.length() == 0 || dFirmaTlf.length() == 0 || dLandby.length() == 0) {
+            alarm = new Alert(AlertType.ERROR);
+            alarm.setTitle("FEJL");
+            alarm.setHeaderText("Information mangler");
+            alarm.setContentText("Venligst udfyld alle de n�dvendige felter");
+            alarm.showAndWait();
+        } else {
+            if (chkLedsager.isSelected() == false) {
+            	deltager = Service.createDeltager(dNavn, dTlf, dEmail, dAdr, dFirma, dFirmaTlf, dLandby);
+            } else {
+                if (chkLedsager.isSelected() && (lNavn.length() == 0 || lTlf.length() == 0 || lEmail.length() == 0)) {
+                    alarm = new Alert(AlertType.ERROR);
+                    alarm.setTitle("FEJL");
+                    alarm.setHeaderText("Information mangler");
+                    alarm.setContentText("Venligst udfyld alle de n�dvendige felter");
+                    alarm.showAndWait();
+                } else {
+                   deltager = Service.createDeltager(dNavn, dTlf, dEmail, dAdr, dFirma, dFirmaTlf, dLandby);
+                   Ledsager ledsager = Service.createLedsager(deltager, lNavn, lTlf, lEmail);
+                   deltager.setLedsager(ledsager);
+                }
+                
+            }
+            
+            
+        }
+        boolean foredragsholder = chkForedragsholder.isSelected();
+        
+        Hotel hotellet = hotel.getSelectionModel().getSelectedItem();
+        konference.addDeltager(deltager);
+        LocalDate ankomstL = ankomst.getValue();
+        LocalDate afrejseL = afrejse.getValue();
+        Tilmelding tilmelding = Service.createTilmelding(konference, ankomstL, foredragsholder, afrejseL, hotellet, deltager);
+        for(Udflugt udf : udflugterValgt.getItems()) {
+        	tilmelding.addUdflugt(udf);
+        }
+        for(HotelService hts : servicesValgt.getItems()) {
+        	tilmelding.addHotelService(hts);
+        }
+        alarm = new Alert(AlertType.CONFIRMATION);
+        alarm.setTitle("TILMELDING");
+        alarm.setHeaderText("Tak for din tilmelding!");
+        alarm.setContentText("Din endelige pris er: " + tilmelding.beregnPris());
+        alarm.showAndWait();
+        this.hide();
+    }
+
+}

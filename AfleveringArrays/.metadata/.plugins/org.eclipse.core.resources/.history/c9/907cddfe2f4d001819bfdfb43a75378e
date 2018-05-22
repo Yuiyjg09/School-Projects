@@ -1,0 +1,34 @@
+package application.model;
+
+import java.util.*;
+
+public class BilKatagori {
+	private String navn;
+	private ArrayList<Bil> biler;
+	
+	public BilKatagori(String navn) {
+		this.navn = navn;
+	}
+	
+	
+	public String getNavn() {
+		return navn;
+	}
+	
+	public void setNavn(String navn) {
+		this.navn = navn;
+	}
+	
+	public ArrayList<Bil> getBiler() {
+		return new ArrayList<Bil>(biler);
+	}
+	
+	public void addBil(Bil bil) {
+		biler.add(bil);
+	}
+	
+	public void removeBil(Bil bil) {
+		biler.remove(bil);
+	}
+	
+}

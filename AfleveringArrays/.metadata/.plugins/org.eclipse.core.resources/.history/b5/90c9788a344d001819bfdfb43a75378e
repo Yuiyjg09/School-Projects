@@ -1,0 +1,25 @@
+package guifx;
+
+import application.service.*;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
+public class KajsbilerMainApp extends Application {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Application.launch(args);
+	}
+
+	@Override
+	public void start(Stage stage) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,53 @@
+package application.model;
+
+import java.time.*;
+
+import java.util.*;
+
+
+public class Udlejning {
+	private Kunde kunde;
+	private ArrayList<Bil> biler;
+	private LocalDate udleveringsdato;
+	
+	private LocalDate tilbageleveringsdato;
+	
+	public Udlejning(Kunde kunde, ArrayList<Bil> biler, LocalDate udleveringsdato, LocalDate tilbageleveringsdato) {
+		
+	}
+
+	public LocalDate getUdleveringsdato() {
+		return udleveringsdato;
+	}
+
+	public void setUdleveringsdato(LocalDate udleveringsdato) {
+		this.udleveringsdato = udleveringsdato;
+	}
+
+	public Kunde getKunde() {
+		return kunde;
+	}
+
+	public void setKunde(Kunde kunde) {
+		this.kunde = kunde;
+	}
+
+	public LocalDate getTilbageleveringsdato() {
+		return tilbageleveringsdato;
+	}
+
+	public void setTilbageleveringsdato(LocalDate tilbageleveringsdato) {
+		this.tilbageleveringsdato = tilbageleveringsdato;
+	}
+	
+	public ArrayList<Bil> getBiler() {
+		return new ArrayList<Bil>(biler);
+	}
+	
+	public double beregnPris() {
+		double totalPris = 0.0;
+		
+		return totalPris;
+	}
+	
+}

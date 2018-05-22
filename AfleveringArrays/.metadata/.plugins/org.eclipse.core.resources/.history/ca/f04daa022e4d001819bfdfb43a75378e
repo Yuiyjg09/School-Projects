@@ -1,0 +1,10 @@
+package application.model;
+
+public class Bil {
+	private String model;
+	private String maerke;
+	private String nummerplade;
+	private Tilstand tilstand;
+	
+	
+}

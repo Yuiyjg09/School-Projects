@@ -1,0 +1,82 @@
+package application.model;
+
+import java.util.*;
+
+public class Kunde {
+	private String navn;
+	private String email;
+	private String tlfnr;
+	private static int kundenr = 0;
+	private int myKundeNr;
+	private boolean erhvervskunde;
+	private ArrayList<Udlejning> udlejninger;
+	
+	public Kunde(String navn, String email, String tlfnr, boolean erhvervskunde) {
+		this.navn = navn;
+		this.setEmail(email);
+		this.setTlfnr(tlfnr);
+		this.setErhvervskunde(erhvervskunde);
+		myKundeNr = getKundeNr();
+	}
+	
+	public String getNavn() {
+		return navn;
+	}
+	public void setNavn(String navn) {
+		this.navn = navn;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTlfnr() {
+		return tlfnr;
+	}
+
+	public void setTlfnr(String tlfnr) {
+		this.tlfnr = tlfnr;
+	}
+
+	public boolean isErhvervskunde() {
+		return erhvervskunde;
+	}
+
+	public void setErhvervskunde(boolean erhvervskunde) {
+		this.erhvervskunde = erhvervskunde;
+	}
+	
+	public static int getKundeNr() {
+		return kundenr++;
+	}
+
+	public int getMyKundeNr() {
+		return myKundeNr;
+	}
+
+	public ArrayList<Udlejning> getUdlejninger() {
+		return new ArrayList<Udlejning>(udlejninger);
+	}
+
+	public void addUdlejninger(Udlejning udlejning) {
+		this.udlejninger.add(udlejning);
+	}
+	
+	public void removeUdlejninger(Udlejning udlejning) {
+		this.udlejninger.remove(udlejning);
+	}
+	
+	@Override
+	public String toString() {
+		if(erhvervskunde) {
+			return
+		} else {
+			return
+		}
+	}
+
+}

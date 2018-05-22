@@ -1,0 +1,111 @@
+package guifx;
+
+import java.time.LocalDate;
+
+import application.model.*;
+import application.model.BilKatagori;
+import application.service.Service;
+import javafx.scene.Scene;
+import javafx.beans.value.ChangeListener;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import storage.Storage;
+
+public class UdlejningWindow extends Stage {
+	
+	public UdlejningWindow(String title) {
+		this.initStyle(StageStyle.UTILITY);
+        this.initModality(Modality.APPLICATION_MODAL);
+        this.setResizable(false);
+        
+        
+        this.setTitle(title);
+        GridPane pane = new GridPane();
+        this.initContent(pane);
+        
+        Scene scene = new Scene(pane);
+        this.setScene(scene);
+	}
+
+	private ComboBox<Bil> cbBiler;
+	private ComboBox<BilKatagori> cbKatagorier;
+	private ListView<Bil> lvwBiler;
+	
+	private void initContent(GridPane pane) {
+		
+		Label lblUd = new Label("Udleveringsdato:");
+		pane.add(lblUd, 0, 0);
+		
+		DatePicker dpUd = new DatePicker();
+		pane.add(dpUd, 0, 1);
+		dpUd.setValue(LocalDate.now());
+		
+		Label lblTilbage = new Label("Tilbageleveringsdato:");
+		pane.add(lblTilbage, 0, 2);
+		
+		DatePicker dpTil = new DatePicker();
+		pane.add(dpTil, 0, 3);
+		dpTil.setValue(LocalDate.now().plusDays(1));
+		
+		Label lblCbK = new Label("Vælg Katagori:");
+		pane.add(lblCbK, 2, 0);
+		
+		cbKatagorier = new ComboBox<BilKatagori>();
+		pane.add(cbKatagorier, 2, 1);
+		cbKatagorier.getItems().setAll(Storage.getKatagorier());
+		cbKatagorier.setOnAction(event -> this.selectedKatagoriChanged());
+		
+		Label lblCbB = new Label("Vælg Bil:");
+		pane.add(lblCbB, 2, 2);
+		
+		cbBiler = new ComboBox<Bil>();
+		pane.add(cbBiler, 2, 3);
+		
+		
+		
+		
+		Label lblBiler = new Label("Biler Valgt:");
+		pane.add(lblBiler, 2, 4);
+		
+		lvwBiler = new ListView<Bil>();
+		pane.add(lvwBiler, 2, 5, 1, 3);
+		lvwBiler.setPrefHeight(200);
+		lvwBiler.setPrefWidth(200);
+		
+		ChangeListener<Bil> listener = (ov, oldBil, newBil) -> this.selectedBilChanged();
+		lvwBiler.getSelectionModel().selectedItemProperty().addListener(listener);
+		
+		Button btnCancel = new Button("Cancel");
+		pane.add(btnCancel, 1, 5);
+		btnCancel.setOnAction(event -> this.cancelAction());
+	}
+	
+	private void cancelAction() {
+		this.hide();
+	}
+	
+	private void selectedKatagoriChanged() {
+		if(!cbKatagorier.getSelectionModel().isEmpty()) {
+			cbBiler.getItems().setAll(cbKatagorier.getSelectionModel().getSelectedItem().getBiler());
+		} else {
+			Alert alert = new Alert(null);
+			alert.setAlertType(AlertType.INFORMATION);
+			alert.setHeaderText("Ingen Katagori valgt");
+			alert.setContentText("Vælg Katagori");
+			alert.showAndWait();
+		}
+	}
+	
+	private void selectedBilChanged() {}
+}

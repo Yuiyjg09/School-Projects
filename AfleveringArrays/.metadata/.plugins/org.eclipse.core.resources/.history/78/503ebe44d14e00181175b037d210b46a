@@ -1,0 +1,64 @@
+package guifx;
+
+import application.service.Service;
+import application.model.*;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+public class VisUdlejningWindow extends Stage{
+	private Udlejning udlejning;
+	
+	public VisUdlejningWindow(String title, Udlejning udlejning) {
+		this.initStyle(StageStyle.UTILITY);
+        this.initModality(Modality.APPLICATION_MODAL);
+        this.setResizable(false);
+        
+        this.udlejning = udlejning;
+        
+        this.setTitle(title);
+        GridPane pane = new GridPane();
+        this.initContent(pane);
+        
+        Scene scene = new Scene(pane);
+        this.setScene(scene);
+	}
+	
+	private TextField txfUd, txfTil;
+	private TextArea txaBiler;
+	
+	private void initContent(GridPane pane) {
+		
+		Label lblUd = new Label("Udlejningsdato:");
+		pane.add(lblUd, 0, 0);
+		
+		txfUd = new TextField();
+		pane.add(txfUd, 0, 1);
+		txfUd.setText(udlejning.getUdleveringsdato().toString());
+		
+		Label lblTil = new Label("Tilbageleveringsdato:");
+		pane.add(lblTil, 0, 2);
+		
+		txfTil = new TextField();
+		pane.add(txfTil, 0, 3);
+		
+		
+		
+		Button btnClose = new Button("Close");
+		pane.add(btnClose, 0, 0);
+		btnClose.setOnAction(event -> this.closeAction());
+	}
+	
+	private void closeAction() {
+		this.hide();
+	}
+}

@@ -1,0 +1,13 @@
+package application.service;
+
+import application.model.*;
+
+import storage.Storage;
+
+public class Service {
+	
+	public static void createBil(String model, String maerke, String nummerplade, String brændstof) {
+		Bil bil = new Bil(model, maerke, nummerplade, brændstof);
+		storage.Storage.addBil(bil);
+	}
+}
